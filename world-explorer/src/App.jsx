@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import axios from "axios";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -16,6 +17,13 @@ function App() {
     document.body.classList.toggle("dark-mode", darkMode);
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
+
+  useEffect(() => {
+    axios
+      .get("https://restcountries.com/v3.1/all")
+      .then((res) => setCountries(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 }
 
 export default App;
