@@ -44,6 +44,29 @@ function App() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Container
+            className={`py-4 ${darkMode ? "text-light" : "text-dark"}`}
+          >
+            <header className="d-flex justify-content-between align-items-center mb-4">
+              <h1>🌍 World Explorer</h1>
+              <Button
+                variant={darkMode ? "light" : "dark"}
+                onClick={() => setDarkMode((prev) => !prev)}
+              >
+                {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+              </Button>
+            </header>
+          </Container>
+        }
+      />
+    </Routes>
+  );
 }
 
 export default App;
