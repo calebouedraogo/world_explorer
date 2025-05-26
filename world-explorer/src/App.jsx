@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
@@ -11,6 +11,10 @@ function App() {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
+
+  useEffect(() => {
+    document.body.classList.toggle("dark-mode", darkMode);
+  });
 }
 
 export default App;
