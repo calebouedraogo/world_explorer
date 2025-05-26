@@ -24,6 +24,26 @@ function App() {
       .then((res) => setCountries(res.data))
       .catch((err) => console.error(err));
   }, []);
+
+  const filteredCountries = countries.filllter(
+    (c) =>
+      c.name.common.toLowerCase().includes(search.toLowerCase()) &&
+      (region ? c.region === region : true)
+  );
+
+  const sortedCountries = filteredCountries.sort((a, b) => {
+    if (sortKey === "name") {
+      return a.name.common.localeCompare(b.name.common);
+    } else if (sortKey === "population") {
+      return b.population - a.population;
+    }
+    return 0;
+  });
+
+  const painatedCountries = sortedCountries.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 }
 
 export default App;
