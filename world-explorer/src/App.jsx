@@ -62,6 +62,32 @@ function App() {
                 {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
               </Button>
             </header>
+
+            <div className="d-flex gap-3 mb-4 flex-wrap">
+              <Form.Control
+                type="text"
+                placeholder="Search by name..."
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Form.Select
+                onChange={(e) => setRegion(e.target.value)}
+                defaultValue=""
+              >
+                <option value="">All Regions</option>
+                <option value="Africa">Africa</option>
+                <option value="Americas">Americas</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania"></option>
+              </Form.Select>
+              <Form.Select
+                onChange={(e) => setSortKey(e.target.value)}
+                defaultValue="name"
+              >
+                <option value="name">Sort by Name</option>
+                <option value="population">Sort by population</option>
+              </Form.Select>
+            </div>
           </Container>
         }
       />
