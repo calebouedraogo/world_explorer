@@ -88,6 +88,36 @@ function App() {
                 <option value="population">Sort by population</option>
               </Form.Select>
             </div>
+
+            <Row xs={1} md={3} className="g-4">
+              {paginatedCountries.map((country) => (
+                <Col key={country.cca3}>
+                  <Card
+                    bg={darkMode ? "dark" : "light"}
+                    text={darkMode ? "light" : "dark"}
+                  >
+                    <Link
+                      to={`/country/${country.cca3}`}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={country.flags.svg}
+                        alt={country.name.common}
+                      />
+                      <Card.Body>
+                        <Card.Title>{country.name.common}</Card.Title>
+                        <Card.Text>
+                          Population: {country.population.toLocaleString()}
+                        </Card.Text>
+                        <Card.Text>Region: {country.region}</Card.Text>
+                        <Card.Text>Capital: {country.capital?.[0]}</Card.Text>
+                      </Card.Body>
+                    </Link>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </Container>
         }
       />
