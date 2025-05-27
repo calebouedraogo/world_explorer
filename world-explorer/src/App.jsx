@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
+import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -8,7 +9,7 @@ function App() {
   const [region, setRegion] = useState("");
   const [sortKey, setSortKey] = useState("name");
   const [darkMode, setDarkMode] = useState(
-    () => lacalStorage.getItem("theme") === "dark"
+    () => localStorage.getItem("theme") === "dark"
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -40,7 +41,7 @@ function App() {
     return 0;
   });
 
-  const painatedCountries = sortedCountries.slice(
+  const paginatedCountries = sortedCountries.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -118,6 +119,22 @@ function App() {
                 </Col>
               ))}
             </Row>
+
+            <div className="mt-4 d-flex justify-content-between">
+              <Button
+                variant={darkMode ? "outline-light" : "outline-secondary"}
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+              >
+                Prev
+              </Button>
+              <span>Page {currentPage}</span>
+              <Button
+                variant={darkMode ? "outline-light" : "outline-secondary"}
+                onClick={() => setCurrentPage((p) => p + 1)}
+              >
+                Next
+              </Button>
+            </div>
           </Container>
         }
       />
