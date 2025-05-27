@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
+import CountryDetail from "./CountryDetail";
 import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
       .catch((err) => console.error(err));
   }, []);
 
-  const filteredCountries = countries.filllter(
+  const filteredCountries = countries.filter(
     (c) =>
       c.name.common.toLowerCase().includes(search.toLowerCase()) &&
       (region ? c.region === region : true)
@@ -137,6 +138,10 @@ function App() {
             </div>
           </Container>
         }
+      />
+      <Route
+        path="/country/:code"
+        element={<CountryDetail darkMode={darkMode} />}
       />
     </Routes>
   );
