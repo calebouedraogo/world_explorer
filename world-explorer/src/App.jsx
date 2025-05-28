@@ -3,6 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
 import CountryDetail from "./CountryDetail";
 import { Button, Card, Container, Form, Row, Col } from "react-bootstrap";
+import Footer from "./Footer";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -48,102 +49,110 @@ function App() {
   );
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Container
-            className={`py-4 ${darkMode ? "text-light" : "text-dark"}`}
-          >
-            <header className="d-flex justify-content-between align-items-center mb-4">
-              <h1>🌍 World Explorer</h1>
-              <Button
-                variant={darkMode ? "light" : "dark"}
-                onClick={() => setDarkMode((prev) => !prev)}
-              >
-                {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
-              </Button>
-            </header>
-
-            <div className="d-flex gap-3 mb-4 flex-wrap">
-              <Form.Control
-                type="text"
-                placeholder="Search by name..."
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <Form.Select
-                onChange={(e) => setRegion(e.target.value)}
-                defaultValue=""
-              >
-                <option value="">All Regions</option>
-                <option value="Africa">Africa</option>
-                <option value="Americas">Americas</option>
-                <option value="Asia">Asia</option>
-                <option value="Europe">Europe</option>
-                <option value="Oceania"></option>
-              </Form.Select>
-              <Form.Select
-                onChange={(e) => setSortKey(e.target.value)}
-                defaultValue="name"
-              >
-                <option value="name">Sort by Name</option>
-                <option value="population">Sort by population</option>
-              </Form.Select>
-            </div>
-
-            <Row xs={1} md={3} className="g-4">
-              {paginatedCountries.map((country) => (
-                <Col key={country.cca3}>
-                  <Card
-                    bg={darkMode ? "dark" : "light"}
-                    text={darkMode ? "light" : "dark"}
+    <div
+      className={darkMode ? "bg-dark text-light" : "bg-light text-dark"}
+      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+    >
+      <div style={{ flex: "1 0 auto" }}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Container className="py-4">
+                <header className="d-flex justify-content-between align-items-center mb-4">
+                  <h1>🌍 World Explorer</h1>
+                  <Button
+                    variant={darkMode ? "light" : "dark"}
+                    onClick={() => setDarkMode((prev) => !prev)}
                   >
-                    <Link
-                      to={`/country/${country.cca3}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <Card.Img
-                        variant="top"
-                        src={country.flags.svg}
-                        alt={country.name.common}
-                      />
-                      <Card.Body>
-                        <Card.Title>{country.name.common}</Card.Title>
-                        <Card.Text>
-                          Population: {country.population.toLocaleString()}
-                        </Card.Text>
-                        <Card.Text>Region: {country.region}</Card.Text>
-                        <Card.Text>Capital: {country.capital?.[0]}</Card.Text>
-                      </Card.Body>
-                    </Link>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+                    {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+                  </Button>
+                </header>
 
-            <div className="mt-4 d-flex justify-content-between">
-              <Button
-                variant={darkMode ? "outline-light" : "outline-secondary"}
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-              >
-                Prev
-              </Button>
-              <span>Page {currentPage}</span>
-              <Button
-                variant={darkMode ? "outline-light" : "outline-secondary"}
-                onClick={() => setCurrentPage((p) => p + 1)}
-              >
-                Next
-              </Button>
-            </div>
-          </Container>
-        }
-      />
-      <Route
-        path="/country/:code"
-        element={<CountryDetail darkMode={darkMode} />}
-      />
-    </Routes>
+                <div className="d-flex gap-3 mb-4 flex-wrap">
+                  <Form.Control
+                    type="text"
+                    placeholder="Search by name..."
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <Form.Select
+                    onChange={(e) => setRegion(e.target.value)}
+                    defaultValue=""
+                  >
+                    <option value="">All Regions</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Americas">Americas</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Oceania">Oceania</option>
+                  </Form.Select>
+                  <Form.Select
+                    onChange={(e) => setSortKey(e.target.value)}
+                    defaultValue="name"
+                  >
+                    <option value="name">Sort by Name</option>
+                    <option value="population">Sort by population</option>
+                  </Form.Select>
+                </div>
+
+                <Row xs={1} md={3} className="g-4">
+                  {paginatedCountries.map((country) => (
+                    <Col key={country.cca3}>
+                      <Card
+                        bg={darkMode ? "dark" : "light"}
+                        text={darkMode ? "light" : "dark"}
+                      >
+                        <Link
+                          to={`/country/${country.cca3}`}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          <Card.Img
+                            variant="top"
+                            src={country.flags.svg}
+                            alt={country.name.common}
+                          />
+                          <Card.Body>
+                            <Card.Title>{country.name.common}</Card.Title>
+                            <Card.Text>
+                              Population: {country.population.toLocaleString()}
+                            </Card.Text>
+                            <Card.Text>Region: {country.region}</Card.Text>
+                            <Card.Text>
+                              Capital: {country.capital?.[0]}
+                            </Card.Text>
+                          </Card.Body>
+                        </Link>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+
+                <div className="mt-4 d-flex justify-content-between">
+                  <Button
+                    variant={darkMode ? "outline-light" : "outline-secondary"}
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                  >
+                    Prev
+                  </Button>
+                  <span>Page {currentPage}</span>
+                  <Button
+                    variant={darkMode ? "outline-light" : "outline-secondary"}
+                    onClick={() => setCurrentPage((p) => p + 1)}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </Container>
+            }
+          />
+          <Route
+            path="/country/:code"
+            element={<CountryDetail darkMode={darkMode} />}
+          />
+        </Routes>
+      </div>
+      <Footer darkMode={darkMode} />
+    </div>
   );
 }
 
